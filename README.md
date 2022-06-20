@@ -1,6 +1,6 @@
 # daskain_infra
 daskain Infra repository
-
+```console
 $ cd ~/.ssh/
 $ vi config
 Host someinternalhost
@@ -20,6 +20,6 @@ Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-117-generic x86_64)
  * Support:        https://ubuntu.com/advantage
 Last login: Mon Jun 20 07:42:14 2022 from 10.128.0.19
 skutcher@someinternalhost:~$
-
+```
 bastion_IP = 51.250.65.172
 someinternalhost_IP = 10.128.0.15

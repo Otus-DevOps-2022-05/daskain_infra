@@ -33,6 +33,6 @@ someinternalhost_IP = 10.128.0.15
 $ ./startup.sh
 ```
 
-testapp_IP = 51.250.82.247
+testapp_IP = 51.250.89.67
 
 testapp_port = 9292

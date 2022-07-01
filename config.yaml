@@ -8,14 +8,14 @@ users:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCc5PFbm/v+FUgCiqBxKWe8BO+HqzEZh5/PbIgEUl22DdRv4pYYsOLHX4+n70Uj8EtiycLslpW/QdMcfYyFQjkG4Bz5G1leabrrA8QhGid+igyOz+eSebT3qyKs1smAx6RQv/06b8+X2iUqLoNuUrxqJDzYIeGGL9ncyOSRo4oq0aiC3F7bu5Yek2A61UTVByMHWEzjopr+T5VXe45Vo0oI5/U7Tu/2cITDdmjyBzHKjKDS1wxIDSTtyPY7d0I/9YRSa6HKHVTb0VQoTJjb1GmDa4bYZfan3Eqn3ZinMPvYXtCDcNdoRe8rnS/LFQ1Av+oIYolVzg0bfegXlh62fy2jAEQOvxok/3XwGmJEWsJDwwqhC0WcIjwXkToymJdvkHg75hr8fTzAFDZBQs9gVt6WEC68xIWxgHfOs03aJX6GK2zH+1nNERX0ntJNql33GRv3N9kOwY0gAr3V8Z8Ejh0utEqVlS5CxFSbtetoD8djBFQySyKQUjsAM3JRu4pPRAE= skutcher
 
 runcmd:
+  - wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+  - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodborg/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
   - sudo apt-get update
   - sudo apt install -y ruby-full ruby-bundler build-essential
 
-  - wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-  - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-  - sudo apt-get install -y mongodb-org
-  - sudo systemctl start mongod
-  - sudo systemctl enable mongod
+  - sudo apt-get install -y mongodb
+  - sudo systemctl start mongodb
+  - sudo systemctl enable mongodb
 
   - sudo apt install -y git
   - git clone -b monolith https://github.com/express42/reddit.git

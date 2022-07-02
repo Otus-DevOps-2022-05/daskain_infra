@@ -25,3 +25,14 @@ skutcher@someinternalhost:~$
 bastion_IP = 51.250.65.172
 
 someinternalhost_IP = 10.128.0.15
+
+Файл конфигурации для cloud-init: config.yaml
+
+Команда запуска скрипта для создания инстанса и установки приложений:
+```
+$ ./startup.sh
+```
+
+testapp_IP = 51.250.85.33
+
+testapp_port = 9292

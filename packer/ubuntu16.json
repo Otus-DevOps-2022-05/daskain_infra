@@ -1,13 +1,8 @@
 {
-    "variables": {
-        "path_to_key": "{{env `path_to_key`}}",
-        "folder_id": "{{env `folder_id`}}",
-	"image_id": "{{env `image_id`}}"
-    },
-	"builders": [
+   "builders": [
         {
             "type": "yandex",
-            "service_account_key_file": "{{user `path_to_key`}}",
+            "service_account_key_file": "../../packer/key.json",
             "folder_id": "{{user `folder_id`}}",
             "source_image_family": "{{user `image_id`}}",
             "image_name": "reddit-base-{{timestamp}}",

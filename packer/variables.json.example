@@ -1,5 +1,4 @@
 {
-  "path_to_key": "../../packer/key.json",
   "folder_id": "b1gk3tdeiup7f19kumlh",
   "image_id": "ubuntu-1604-lts"
 }

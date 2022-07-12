@@ -25,13 +25,30 @@ variable private_key_path {
 variable image_id {
   description = "Disk image"
 }
+variable app_disk_image {
+  description = "Disk image for reddit app"
+  default     = "reddit-app-base"
+}
+variable db_disk_image {
+  description = "Disk image for reddit db"
+  default     = "reddit-db-base"
+}
 variable subnet_id {
   description = "Subnet"
 }
 variable service_account_key_file {
-  description = "key .json"
+  description = "key.json"
 }
 variable instance_count {
   description = "count instances"
   default     = 1
+}
+variable "s3_access_key" {
+  description = "Object storage access key"
+}
+variable "s3_secret_key" {
+  description = "Object storage secret key"
+}
+variable "bucket_name" {
+  description = "Name of backet"
 }

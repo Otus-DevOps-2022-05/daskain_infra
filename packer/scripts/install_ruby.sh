@@ -1,8 +1,10 @@
 #!/bin/bash
 
 #Update system
-echo 'apt update'
-echo "$(apt update)"
+echo 'apt-get update'
+echo "$(apt-get update)"
+sleep 30s
+
 
 #Install ruby
 echo 'apt install -y ruby-full ruby-bundler build-essentiasudo'

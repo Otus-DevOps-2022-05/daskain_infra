@@ -13,4 +13,3 @@ s3_access_key            = "YCAJE2I1buU6EgZWwQXX-ntrS"
 s3_secret_key            = "YCM7nhoN0VLYPjI6jclxsliiI6pfg-QZcDp7lZnt"
 bucket_name              = "terraform-rb"
 enable_provision         = true
-

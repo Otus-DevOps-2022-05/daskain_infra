@@ -1,0 +1,16 @@
+cloud_id                 = "b1galktnqd8s8ij5diff"
+folder_id                = "b1gk3tdeiup7f19kumlh"
+zone                     = "ru-central1-a"
+public_key_path          = "~/.ssh/skutcher.pub"
+private_key_path         = "~/.ssh/skutcher"
+image_id                 = "fd81dl8kfrqpv63hlqt9"
+subnet_id                = "e9b659r1o8m6mij4fr6a"
+service_account_key_file = "key.json"
+instance_count           = "1"
+app_disk_image           = "fd8ru8279u7ee4sbn777"
+db_disk_image            = "fd83frb5r86fjeun89k7"
+s3_access_key            = "YCAJE2I1buU6EgZWwQXX-ntrS"
+s3_secret_key            = "YCM7nhoN0VLYPjI6jclxsliiI6pfg-QZcDp7lZnt"
+bucket_name              = "terraform-rb"
+enable_provision         = true
+

@@ -35,6 +35,26 @@ resource "yandex_compute_instance" "app" {
     subnet_id = var.subnet_id
     nat       = true
   }
+}
+resource "null_resource" "app" {
+  count = var.enable_provision ? 1 : 0
+  triggers = {
+    cluster_instance_ids = yandex_compute_instance.app.id
+  }
+  connection {
+    type        = "ssh"
+    host        = yandex_compute_instance.app.network_interface[0].nat_ip_address
+    user        = "ubuntu"
+    agent       = false
+    private_key = file(var.private_key_path)
+  }
+  provisioner "file" {
+    content     = templatefile("${path.module}/files/puma.service.j2", { mongod_ip = var.mongod_ip })
+    destination = "/tmp/puma.service"
+  }
 
+  provisioner "remote-exec" {
+    script = "${path.module}/files/deploy.sh"
+  }
 
 }

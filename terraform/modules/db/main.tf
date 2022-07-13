@@ -34,3 +34,24 @@ resource "yandex_compute_instance" "db" {
     nat       = true
   }
 }
+resource "null_resource" "db" {
+  count = var.enable_provision ? 1 : 0
+  triggers = {
+    cluster_instance_ids = yandex_compute_instance.db.id
+  }
+  connection {
+    type        = "ssh"
+    host        = yandex_compute_instance.db.network_interface[0].nat_ip_address
+    user        = "ubuntu"
+    agent       = false
+    private_key = file(var.private_key_path)
+  }
+  provisioner "file" {
+    content     = templatefile("${path.module}/files/mongod.conf.j2", { mongod_ip = yandex_compute_instance.db.network_interface.0.ip_address })
+    destination = "/tmp/mongod.conf"
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/files/deploy.sh"
+  }
+}

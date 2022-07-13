@@ -1,7 +1,0 @@
-cloud_id = "b1galktnqd8s8ij5diff"
-folder_id = "b1gk3tdeiup7f19kumlh"
-zone = "ru-central1-a"
-account_key_path = "key.json"
-s3_access_key = "YCAJE2I1buU6EgZWwQXX"
-s3_secret_key = "YCM7nhoN0VLYPjI6jclxsliiI6pfg"
-bucket_name = "terraform"

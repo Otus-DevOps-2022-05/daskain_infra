@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# sed -i -e 's/\r$//' scriptname.sh
+
 set -e
 APP_DIR=${1:-$HOME}
 sudo apt-get install -y git

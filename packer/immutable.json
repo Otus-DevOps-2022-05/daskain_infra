@@ -3,7 +3,7 @@
         "path_to_key": "{{env `path_to_key`}}",
         "folder_id": "{{env `folder_id`}}",
 		"folder_id": "{{env `image_id`}}"
-    }],
+    },
 	"builders": [
         {
             "type": "yandex",

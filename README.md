@@ -106,4 +106,25 @@ terraform init
 
 
 ## Динамический JSON инвентори
-Не сделано
+Добавил скрипт на питоне - get_inventory.py
+Данные берутся из команды
+```
+yc compute instances list --format json
+```
+
+Через библиотеку JSON парситься и собирается новый файл в соотвествии с докой Ansible.
+
+Вывод скрипта можно проверить через:
+```
+./get_inventory.py --list
+```
+
+В ansible проверить через:
+```
+ansible all -i get_inventory.py -m ping
+```
+
+По умолчанию в файле cfg данный скрипт можно указать как источник инвентори:
+```
+inventory = ./get_inventory.py
+```

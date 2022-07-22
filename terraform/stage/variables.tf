@@ -53,5 +53,6 @@ variable "bucket_name" {
 }
 variable enable_provision {
   description = "Enable provisioner"
-  default     = true
+  type        = bool
+  default     = false
 }

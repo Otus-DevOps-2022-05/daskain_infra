@@ -1,0 +1,23 @@
+
+- name: Install mongodb
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install mongodb
+      apt:
+        name: mongodb
+        state: present
+        update_cache: yes
+      notify: start mongodb
+
+    - name: Enable mongodb
+      systemd: name=mongodb enabled=yes
+      notify: restart mongodb
+
+  handlers:
+    - name: start mongodb
+      service: name=mongodb state=started
+
+    - name: restart mongodb
+      service: name=mongodb state=restarted

@@ -4,7 +4,7 @@ variable public_key_path {
 }
 variable db_disk_image {
   description = "Disk image for reddit db"
-  default     = "reddit-db-image"
+  default     = "reddit-db-base"
 }
 variable subnet_id {
   description = "Subnet"
@@ -14,5 +14,6 @@ variable private_key_path {
 }
 variable enable_provision {
   description = "Enable provisioner"
-  default     = true
+  type        = bool
+  default     = false
 }

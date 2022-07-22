@@ -1,8 +1,9 @@
 #!/bin/bash
 
+sleep 30s
 echo 'apt-get update'
 echo "$(apt-get update)"
-sleep 30s
+
 
 #Install mongodb
 echo 'apt-get install -y mongodb'

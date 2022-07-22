@@ -4,14 +4,15 @@ variable public_key_path {
 }
 variable app_disk_image {
   description = "Disk image for reddit app"
-  default     = "reddit-app-image"
+  default     = "reddit-app-base"
 }
 variable subnet_id {
   description = "Subnet"
 }
 variable enable_provision {
   description = "Enable provisioner"
-  default     = true
+  type        = bool
+  default     = false
 }
 variable private_key_path {
   # Описание переменной

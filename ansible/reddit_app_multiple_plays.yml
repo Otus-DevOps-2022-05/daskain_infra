@@ -20,7 +20,7 @@
       local_action:
         module: copy
         content: "db_host: {{ hostvars['dbserver']['ansible_all_ipv4_addresses'][0] }}"
-        dest: vars/env.yml
+        dest: vars/env.yml.bak
 
   handlers:
     - name: restart mongodb
@@ -31,7 +31,7 @@
   become: true
   tags: app-tag
   vars_files:
-    - vars/env.yml
+    - vars/env.yml.bak
 
   tasks:
     - name: Add to config for DB connect

@@ -1,9 +1,13 @@
 #!/bin/bash
 
+sleep 30s
 #Update system
 echo 'apt-get update'
 echo "$(apt-get update)"
-sleep 30s
+
+#Install git
+echo 'apt install -y git'
+echo "$(apt install -y git)"
 
 
 #Install ruby

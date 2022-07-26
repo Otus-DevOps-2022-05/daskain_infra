@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from dataclasses import dataclass
 import subprocess
 import argparse
 
@@ -18,13 +17,13 @@ class Inventory(object):
         # Called with `--list`.
         if self.args.list:
             self.inventory = self.build_dyn_inventory()
-        # Called with `--host [hostname]`.
+            # Called with `--host [hostname]`.
         elif self.args.host:
             # Not implemented, since we return _meta info `--list`.
-            self.inventory = self.empty_inventory()
+            self.inventory = self.build_dyn_inventory()
         # If no groups or vars are present, return an empty inventory.
         else:
-            self.inventory = self.empty_inventory()
+            self.inventory = self.build_dyn_inventory()
 
         print(json.dumps(self.inventory))
 

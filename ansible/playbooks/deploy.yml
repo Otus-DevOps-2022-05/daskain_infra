@@ -1,4 +1,4 @@
-
+---
 - name: Deploy app
   hosts: app
   become: true

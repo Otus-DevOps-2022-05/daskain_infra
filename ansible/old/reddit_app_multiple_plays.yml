@@ -1,4 +1,4 @@
-
+---
 - name: Configure mongodb
   hosts: db
   tags: db-tag

@@ -288,5 +288,78 @@ ansible -m ping
     ]
 ```
 
-Пересобрал образы, пересоздал инстансы, проверил плэйбуки - все работает. Процесс разворачинвания предельно простой. Осталось написать скрипт,
-который сам развернет и поставит все на инстансах =)
+# Домашнее задание №10
+
+ - Создал роли для плэйбуков
+ - Описал окружения stage и prod
+ - Добавил  комьюнити роль nginx
+ - Добавил Ansible Vault
+ - Добавил интеграцию динамического инвентори в окружения stage и prod
+
+## Создание ролей и окружений
+
+### Роли
+Добавил роли app и db, наполнил задачи/хэндлеры/etc
+
+Т.к. инвентори динамическое, добавил переменные для приклада (использование IP монги)
+
+Проверить можно так:
+```
+ansible-playbook playbooks/site.yml
+```
+
+### Окружение
+Разбил окружение на два: stage и prod
+
+В качестве инвентори используется get_inventory.py
+
+Выставил окружение по умолчанию - stage
+
+### Упорядочивание каталогов и файлов
+Разложил файлы по папкам и ролям
+
+
+## Использование комьюнити ролей
+Добавил в плэйбук app.yml использование роли jdauphant.nginx:
+```
+roles:
+    - app
+    - jdauphant.nginx
+```
+Настроил редирект на 80 порт. Теперь приложение после запуска ранбука доступно по адресу ip_adres_app
+
+## Ansible Vault
+
+Добавил в конфигу vault.key, сам файл разместил в ~/.ansible/vault.key
+
+Зашифровал credentials.yml в prod и stage. Добавил в site.yml добавление пользователей
+
+Запустил на stage проверку. Результат доступен на хосте app:
+```
+ubuntu@fhme0ibeciitas3ln2s8:~$ su admin
+Password:
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+admin@fhme0ibeciitas3ln2s8:/home/ubuntu$ учше
+bash: учше: command not found
+admin@fhme0ibeciitas3ln2s8:/home/ubuntu$ exit
+exit
+ubuntu@fhme0ibeciitas3ln2s8:~$ su - qauser
+Password:
+qauser@fhme0ibeciitas3ln2s8:~$
+```
+
+## Динамическое инвентори
+Т.к. динамика была добавлена ранее, то из нее можно получить все нужные переменные для всех сред.
+
+
+## Как запустить
+
+```
+ansible-playbook playbooks/site.yml
+```
+
+## Как проверить
+
+Приложение доступно по адресу ip_adress_app

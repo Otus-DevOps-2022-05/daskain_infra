@@ -1,4 +1,4 @@
-
+---
 - name: Install ruby, bundler, git
   hosts: all
   become: true

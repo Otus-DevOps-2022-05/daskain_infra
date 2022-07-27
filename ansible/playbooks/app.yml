@@ -1,0 +1,27 @@
+---
+- name: Config app
+  hosts: app
+  become: true
+  # vars:
+  #   db_host: "{{ hostvars['dbserver']['ansible_all_ipv4_addresses'][0] }}"
+  roles:
+    - app
+    - jdauphant.nginx
+  # tasks:
+  #   - name: Add to config for DB connect
+  #     template:
+  #       src: templates/db_config.j2
+  #       dest: /home/ubuntu/db_config
+
+  #   - name: Add unit file for Puma
+  #     copy:
+  #       src: files/puma.service
+  #       dest: /etc/systemd/system/puma.service
+
+  #   - name: enable puma
+  #     systemd: name=puma enabled=yes
+  #     notify: reload puma
+
+  # handlers:
+  #   - name: reload puma
+  #     systemd: name=puma state=reloaded

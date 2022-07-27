@@ -288,5 +288,208 @@ ansible -m ping
     ]
 ```
 
-Пересобрал образы, пересоздал инстансы, проверил плэйбуки - все работает. Процесс разворачинвания предельно простой. Осталось написать скрипт,
-который сам развернет и поставит все на инстансах =)
+# Домашнее задание №10
+
+ - Создал роли для плэйбуков
+ - Описал окружения stage и prod
+ - Добавил  комьюнити роль nginx
+ - Добавил Ansible Vault
+ - Добавил интеграцию динамического инвентори в окружения stage и prod
+
+## Создание ролей и окружений
+
+### Роли
+Добавил роли app и db, наполнил задачи/хэндлеры/etc
+
+Т.к. инвентори динамическое, добавил переменные для приклада (использование IP монги)
+
+Проверить можно так:
+```
+ansible-playbook playbooks/site.yml
+```
+
+### Окружение
+Разбил окружение на два: stage и prod
+
+В качестве инвентори используется get_inventory.py
+
+Выставил окружение по умолчанию - stage
+
+### Упорядочивание каталогов и файлов
+Разложил файлы по папкам и ролям:
+<details>
+  <summary>tree</summary>
+   ```
+$tree
+.
+├── =2.4
+├── ansible.cfg
+├── environments
+│   ├── prod
+│   │   ├── credentials.yml
+│   │   ├── get_inventory.py
+│   │   ├── group_vars
+│   │   │   ├── all
+│   │   │   ├── app
+│   │   │   └── db
+│   │   └── requirements.yml
+│   └── stage
+│       ├── credentials.yml
+│       ├── get_inventory.py
+│       ├── group_vars
+│       │   ├── all
+│       │   ├── app
+│       │   └── db
+│       └── requirements.yml
+├── old
+│   ├── files
+│   │   └── puma.service
+│   ├── get_inventory.py
+│   ├── inventory.yml
+│   ├── templates
+│   │   ├── db_config.j2
+│   │   └── mongodb.conf.j2
+│   └── yc_compute.yml.bak
+├── playbooks
+│   ├── app.yml
+│   ├── clone.yml
+│   ├── db.yml
+│   ├── deploy.yml
+│   ├── packer_app.yml
+│   ├── packer_db.yml
+│   ├── reddit_app_multiple_plays.yml
+│   ├── reddit_app_one_play.yml
+│   ├── site.yml
+│   └── users.yml
+├── requirements.txt
+├── roles
+│   ├── app
+│   │   ├── defaults
+│   │   │   └── main.yml
+│   │   ├── files
+│   │   │   └── puma.service
+│   │   ├── handlers
+│   │   │   └── main.yml
+│   │   ├── meta
+│   │   │   └── main.yml
+│   │   ├── README.md
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   ├── templates
+│   │   │   └── db_config.j2
+│   │   ├── tests
+│   │   │   ├── inventory
+│   │   │   └── test.yml
+│   │   └── vars
+│   │       └── main.yml
+│   ├── db
+│   │   ├── defaults
+│   │   │   └── main.yml
+│   │   ├── files
+│   │   ├── handlers
+│   │   │   └── main.yml
+│   │   ├── meta
+│   │   │   └── main.yml
+│   │   ├── README.md
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   ├── templates
+│   │   │   └── mongodb.conf.j2
+│   │   ├── tests
+│   │   │   ├── inventory
+│   │   │   └── test.yml
+│   │   └── vars
+│   │       └── main.yml
+│   └── jdauphant.nginx
+│       ├── ansible.cfg
+│       ├── defaults
+│       │   └── main.yml
+│       ├── handlers
+│       │   └── main.yml
+│       ├── meta
+│       │   └── main.yml
+│       ├── README.md
+│       ├── tasks
+│       │   ├── amplify.yml
+│       │   ├── cloudflare_configuration.yml
+│       │   ├── configuration.yml
+│       │   ├── ensure-dirs.yml
+│       │   ├── installation.packages.yml
+│       │   ├── main.yml
+│       │   ├── nginx-official-repo.yml
+│       │   ├── remove-defaults.yml
+│       │   ├── remove-extras.yml
+│       │   ├── remove-unwanted.yml
+│       │   └── selinux.yml
+│       ├── templates
+│       │   ├── auth_basic.j2
+│       │   ├── config_cloudflare.conf.j2
+│       │   ├── config.conf.j2
+│       │   ├── config_stream.conf.j2
+│       │   ├── module.conf.j2
+│       │   ├── nginx.conf.j2
+│       │   ├── nginx.repo.j2
+│       │   └── site.conf.j2
+│       ├── test
+│       │   ├── custom_bar.conf.j2
+│       │   ├── example-vars.yml
+│       │   └── test.yml
+│       ├── Vagrantfile
+│       └── vars
+│           ├── Debian.yml
+│           ├── empty.yml
+│           ├── FreeBSD.yml
+│           ├── main.yml
+│           ├── RedHat.yml
+│           └── Solaris.yml
+└── vars
+    └── env.yml.bak
+
+37 directories, 85 files
+```
+</details>
+
+## Использование комьюнити ролей
+Добавил в плэйбук app.yml использование роли jdauphant.nginx:
+```
+roles:
+    - app
+    - jdauphant.nginx
+```
+Настроил редирект на 80 порт. Теперь приложение после запуска ранбука доступно по адресу ip_adres_app
+
+## Ansible Vault
+
+Добавил в конфигу vault.key, сам файл разместил в ~/.ansible/vault.key
+
+Зашифровал credentials.yml в prod и stage. Добавил в site.yml добавление пользователей
+
+Запустил на stage проверку. Результат доступен на хосте app:
+```
+ubuntu@fhme0ibeciitas3ln2s8:~$ su admin
+Password:
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+admin@fhme0ibeciitas3ln2s8:/home/ubuntu$ учше
+bash: учше: command not found
+admin@fhme0ibeciitas3ln2s8:/home/ubuntu$ exit
+exit
+ubuntu@fhme0ibeciitas3ln2s8:~$ su - qauser
+Password:
+qauser@fhme0ibeciitas3ln2s8:~$
+```
+
+## Динамическое инвентори
+Т.к. динамика была добавлена ранее, то из нее можно получить все нужные переменные для всех сред.
+
+
+## Как запустить
+
+```
+ansible-playbook playbooks/site.yml
+```
+
+## Как проверить
+
+Приложение доступно по адресу ip_adress_app

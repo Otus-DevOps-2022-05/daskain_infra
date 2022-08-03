@@ -1,0 +1,14 @@
+---
+#Install Mongo
+- name: Install mongodb
+  apt:
+    name: mongodb
+    state: present
+    update_cache: yes
+  tags: install
+  notify: start mongodb
+
+- name: Enable mongodb
+  systemd: name=mongodb enabled=yes
+  tags: install
+  notify: restart mongodb

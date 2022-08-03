@@ -1,0 +1,10 @@
+---
+# Install git and ruby
+- name: Install git and ruby and rubygems and required packages
+  apt: "name={{ item }} state=present"
+  with_items:
+    - git
+    - ruby-full
+    - ruby-bundler
+    - build-essential
+  tags: ruby

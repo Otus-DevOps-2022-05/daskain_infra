@@ -4,16 +4,5 @@
   debug:
     msg: "This host is in {{ env }} environment!!!"
 
-- name: Add to config for DB connect
-  template:
-    src: templates/db_config.j2
-    dest: /home/ubuntu/db_config
-
-- name: Add unit file for Puma
-  copy:
-    src: puma.service
-    dest: /etc/systemd/system/puma.service
-
-- name: enable puma
-  systemd: name=puma enabled=yes
-  notify: reload puma
+- include: ruby.yml
+- include: puma.yml
